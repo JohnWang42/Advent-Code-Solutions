@@ -51,14 +51,6 @@ def process(storeList, data):
         storeList[store] = tempWire
 
 data = open('input-day7.txt', 'r').read().split('\n')
-testData = ['123 -> x',
-'456 -> y',
-'x AND y -> d',
-'x OR y -> e',
-'x LSHIFT 2 -> f',
-'y RSHIFT 2 -> g',
-'NOT x -> h',
-'NOT y -> i']
 wires = {}
 process(wires, data)
 evalA = str(wires['a'].resolve(wires))

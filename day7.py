@@ -1,5 +1,4 @@
 import re
-# import pudb; pu.db
 
 class Wire:
     def __init__(self, key1 = None, key2 = None, op = None, val = None):
@@ -30,6 +29,27 @@ class Wire:
             elif(self.op == "OR"):
                 return int(self.key1) | int(self.key2)
 
+def process(storeList, data):
+    for i, line in enumerate(data):
+        ops = re.findall('([a-z0-9]{1,3})\s(AND|OR|LSHIFT|RSHIFT)\s([a-z0-9]{1,3})\s->\s([a-z]{1,3})', line)
+        nt = re.findall('(NOT)\\s([a-z]{1,3})\\s->\\s([a-z]{1,3})', line)
+        assign = re.findall('([a-z0-9]{1,5})\\s->\\s([a-z]{1,3})', line)
+        tempWire = Wire()
+        store = ''
+        if(len(ops) > 0):
+            tempWire.key1 = ops[0][0]
+            tempWire.op = ops[0][1]
+            tempWire.key2 = ops[0][2]
+            store = ops[0][3]
+        elif(len(nt) > 0):
+            tempWire.op = "NOT"
+            tempWire.key1 = nt[0][1]
+            store = nt[0][2]
+        elif(len(assign) > 0):
+            tempWire.val = assign[0][0]
+            store = assign[0][1]
+        storeList[store] = tempWire
+
 data = open('input-day7.txt', 'r').read().split('\n')
 testData = ['123 -> x',
 '456 -> y',
@@ -40,47 +60,11 @@ testData = ['123 -> x',
 'NOT x -> h',
 'NOT y -> i']
 wires = {}
-for i, line in enumerate(data):
-    ops = re.findall('([a-z0-9]{1,3})\s(AND|OR|LSHIFT|RSHIFT)\s([a-z0-9]{1,3})\s->\s([a-z]{1,3})', line)
-    nt = re.findall('(NOT)\\s([a-z]{1,3})\\s->\\s([a-z]{1,3})', line)
-    assign = re.findall('([a-z0-9]{1,5})\\s->\\s([a-z]{1,3})', line)
-    tempWire = Wire()
-    store = ''
-    if(len(ops) > 0):
-        tempWire.key1 = ops[0][0]
-        tempWire.op = ops[0][1]
-        tempWire.key2 = ops[0][2]
-        store = ops[0][3]
-    elif(len(nt) > 0):
-        tempWire.op = "NOT"
-        tempWire.key1 = nt[0][1]
-        store = nt[0][2]
-    elif(len(assign) > 0):
-        tempWire.val = assign[0][0]
-        store = assign[0][1]
-    wires[store] = tempWire
-
+process(wires, data)
 evalA = str(wires['a'].resolve(wires))
 print "First Part 'A Evaluation': " + evalA
+
 wires = {}
-for i, line in enumerate(data):
-    ops = re.findall('([a-z0-9]{1,3})\s(AND|OR|LSHIFT|RSHIFT)\s([a-z0-9]{1,3})\s->\s([a-z]{1,3})', line)
-    nt = re.findall('(NOT)\\s([a-z]{1,3})\\s->\\s([a-z]{1,3})', line)
-    assign = re.findall('([a-z0-9]{1,5})\\s->\\s([a-z]{1,3})', line)
-    tempWire = Wire()
-    store = ''
-    if(len(ops) > 0):
-        tempWire.key1 = ops[0][0]
-        tempWire.op = ops[0][1]
-        tempWire.key2 = ops[0][2]
-        store = ops[0][3]
-    elif(len(nt) > 0):
-        tempWire.op = "NOT"
-        tempWire.key1 = nt[0][1]
-        store = nt[0][2]
-    elif(len(assign) > 0):
-        tempWire.val = assign[0][0]
-        store = assign[0][1]
-    wires[store] = tempWire
+process(wires, data)
 wires['b'] = Wire(None, None, None, evalA)
 print "Second Part 'A Evaluation': " + str(wires['a'].resolve(wires))

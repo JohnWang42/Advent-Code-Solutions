@@ -35,5 +35,5 @@ def genPass(start):
     return toText(passArr)
 
 answer1 = genPass('hepxcrrq')
-print genPass('hepxcrrq')
+print answer1
 print genPass(answer1)

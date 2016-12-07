@@ -28,7 +28,7 @@ amt = {}
 high = 0
 for a in range(100, -1, -1):
     for b in range(100 - a, -1, -1):
-        for c in range(100 - a - b, -1 , -1):
+        for c in range(100 - a - b, -1, -1):
             for d in range(100 - a - b - c, -1, -1):
                 i = 0
                 for name, val in ingrd.iteritems():

@@ -20,7 +20,7 @@ for row in data:
     abas = []
     for grp in ip:
         if grp[0] == '[':
-            inside.append(grp.replace('[','').replace(']',''))
+            inside.append(grp.replace('[', '').replace(']', ''))
         else:
             outside.append(grp)
     for ot in outside:

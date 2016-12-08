@@ -42,9 +42,9 @@ for y in screen:
     line = ''
     for x in y:
         if x:
-            line += '#'
+            line += "\33[91m#"
             count += 1
         else:
-            line += '.'
+            line += "\33[90m."
     print line
 print 'Active Pixels :' + str(count)

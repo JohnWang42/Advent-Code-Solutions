@@ -17,7 +17,6 @@ for row in data:
             for x in range(0, int(dim[0])):
                 screen[y][x] = True
     else:
-        print row
         instr = re.findall(rotreg, row)[0]
         if instr[0] == 'column':
             col = int(instr[1])
@@ -47,4 +46,4 @@ for y in screen:
         else:
             line += "\33[90m."
     print line
-print 'Active Pixels :' + str(count)
+print 'Active Pixels : ' + str(count)

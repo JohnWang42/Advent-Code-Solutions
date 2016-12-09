@@ -1,5 +1,4 @@
 # Day 17
-import binascii
 data = open('input-day17.txt', 'r').read().split('\n')
 containers = []
 for row in data:

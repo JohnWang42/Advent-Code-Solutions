@@ -19,11 +19,12 @@ def explode(strIn):
         strIn = strIn[(strlen + rmv):]
         total += exp * explode(expStr)
     else:
-        # calculate length of a regular string
+        # calculate length of a regular string and add it
         rmv = re.search(stringreg, strIn)
         total += len(rmv.group(0))
+        # remove processed data
         strIn = strIn[(len(rmv.group(0))):]
-    # if there is data left continure processing
+    # if there is data left continue processing
     if len(strIn) > 0:
         total += explode(strIn)
     return total

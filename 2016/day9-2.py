@@ -3,7 +3,6 @@ import re
 data = open('input-day9.txt', 'r').read()
 expreg = r"\(([0-9]+)x([0-9]+)\)"
 stringreg = r"([A-Z]+)"
-total = 0
 
 def explode(strIn):
     total = 0

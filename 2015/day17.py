@@ -1,35 +1,26 @@
 # Day 17
+import binascii
 data = open('input-day17.txt', 'r').read().split('\n')
 containers = []
 for row in data:
     containers.append(int(row))
-
-containers = [20, 15, 10, 5, 5]
-
-target = 25
+bits = len(containers)
+target = 150
 combos = 0
-for i in range(0, len(containers)):
-    empty = containers[:]
-    total = containers[i]
-    used = [containers[i]]
-    empty.remove(containers[i])
-    skip = 0
-    while total < target:
-        if skip == len(empty) or len(empty) == 0:
-            total = -1
-            break
-        curr = empty[skip]
-        if total + curr > target:
-            skip += 1
-        else:
-            total += curr
-            used.append(curr)
-            empty.remove(curr)
-    if total == target:
-        print used
+minbits = "1" * bits
+mincombos = 0
+for c in range(int("1" * bits, 2)):
+    curr = bin(c)[2:].zfill(bits)
+    csum = 0
+    for i in range(len(curr)):
+        if curr[i] == "1":
+            csum += containers[i]
+    if csum == target:
         combos += 1
-        # count alternatives that could be made by switching same size containers
-        for u in used:
-            combos += empty.count(u)
-# print combos
-print sum(containers[i] for i in [1, 2, 4])
+        if curr.count('1') < minbits.count('1'):
+            minbits = curr
+            mincombos = 1
+        elif curr.count('1') == minbits.count('1'):
+            mincombos += 1
+print "Combos: " + str(combos)
+print "Combos with minimum containers: " + str(mincombos)
